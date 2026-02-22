@@ -23,16 +23,16 @@ window.addEventListener('scroll', () => {
 function toggleTheme() {
     const currentTheme = document.body.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
+
     document.body.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
-    
+
     // Update icon
     const themeIcons = document.querySelectorAll('.theme-toggle i');
     themeIcons.forEach(icon => {
         icon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
     });
-    
+
     // Update mobile theme toggle text
     if (mobileThemeToggle) {
         mobileThemeToggle.innerHTML = `<i class="fas fa-${newTheme === 'dark' ? 'moon' : 'sun'}"></i> ${newTheme === 'dark' ? 'Dark' : 'Light'} Mode`;
@@ -80,7 +80,7 @@ mobileNavLinks.forEach(link => {
 // FAQ Accordion
 faqItems.forEach(item => {
     const question = item.querySelector('.faq-question');
-    
+
     question.addEventListener('click', () => {
         // Close all other items
         faqItems.forEach(otherItem => {
@@ -88,7 +88,7 @@ faqItems.forEach(item => {
                 otherItem.classList.remove('active');
             }
         });
-        
+
         // Toggle current item
         item.classList.toggle('active');
     });
@@ -110,26 +110,43 @@ contactForm.addEventListener('submit', async (e) => {
         return;
     }
 
+    // Show loading state
+    const submitBtn = contactForm.querySelector('.form-submit');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+
     try {
         const response = await fetch('/api/contact', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ name, email, phone, projectType, message }),
+            body: JSON.stringify({
+                name,
+                email,
+                phone,
+                projectType,
+                message
+            })
         });
 
-        const data = await response.json();
+        const result = await response.json();
 
         if (response.ok) {
-            alert(data.message);
+            // Show success popup
+            showSuccessPopup(result.message || "Thank you for your inquiry!");
             contactForm.reset();
         } else {
-            alert(data.error || 'An error occurred. Please try again.');
+            alert('Error: ' + (result.error || result.message || 'Something went wrong'));
         }
     } catch (error) {
         console.error('Error submitting form:', error);
-        alert('An error occurred. Please try again.');
+        alert('Failed to submit form. Please check your connection.');
+    } finally {
+        // Reset button state
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
     }
 });
 
@@ -144,26 +161,37 @@ newsletterForm.addEventListener('submit', async (e) => {
         return;
     }
 
+    // Show loading state
+    const submitBtn = newsletterForm.querySelector('.newsletter-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = '...';
+    submitBtn.disabled = true;
+
     try {
         const response = await fetch('/api/newsletter', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email }),
+            body: JSON.stringify({ email })
         });
 
-        const data = await response.json();
+        const result = await response.json();
 
         if (response.ok) {
-            alert(data.message);
+            // Show success popup
+            showSuccessPopup(result.message || "Subscribed successfully!");
             emailInput.value = '';
         } else {
-            alert(data.error || 'An error occurred. Please try again.');
+            alert('Error: ' + (result.error || result.message || 'Already subscribed or invalid email'));
         }
     } catch (error) {
         console.error('Error subscribing to newsletter:', error);
-        alert('An error occurred. Please try again.');
+        alert('Failed to subscribe. Please try again later.');
+    } finally {
+        // Reset button state
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
     }
 });
 
@@ -185,6 +213,32 @@ const observer = new IntersectionObserver((entries) => {
 
 fadeElements.forEach(element => {
     observer.observe(element);
+});
+
+// Success Popup Functions
+function showSuccessPopup(message) {
+    const popup = document.getElementById('successPopup');
+    const popupMessage = popup.querySelector('.popup-body p');
+    popupMessage.textContent = message;
+    popup.classList.add('active');
+
+    // Auto-close after 5 seconds
+    setTimeout(() => {
+        closeSuccessPopup();
+    }, 5000);
+}
+
+function closeSuccessPopup() {
+    const popup = document.getElementById('successPopup');
+    popup.classList.remove('active');
+}
+
+// Close popup when clicking close button or outside
+document.getElementById('popupClose').addEventListener('click', closeSuccessPopup);
+document.getElementById('successPopup').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('successPopup')) {
+        closeSuccessPopup();
+    }
 });
 
 // Smooth scrolling for anchor links
