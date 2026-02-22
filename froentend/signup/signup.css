@@ -218,6 +218,38 @@ body {
   font-family: inherit;
 }
 
+/* Style select inputs (role selection) to match text inputs and ensure visibility */
+.input-field select,
+#role {
+  width: 100%;
+  padding: 1rem 1rem;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 12px;
+  font-size: 1rem;
+  color: var(--text-base);
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.input-field select:focus,
+.input-field select:valid,
+#role:focus,
+#role:valid {
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 2px rgba(141, 96, 255, 0.08);
+}
+
+/* Placeholder option muted color */
+.input-field select option[disabled],
+#role option[disabled] {
+  color: var(--text-muted);
+}
+
 .input-field label {
   position: absolute;
   top: 50%;

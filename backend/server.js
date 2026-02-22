@@ -25,11 +25,7 @@ async function refreshJWTSecret() {
     const now = new Date();
     const threeDays = 3 * 24 * 60 * 60 * 1000;
 
-    if (
-      !secretDoc ||
-      !dateDoc ||
-      now - new Date(dateDoc.value) > threeDays
-    ) {
+    if (!secretDoc || !dateDoc || now - new Date(dateDoc.value) > threeDays) {
       const newSecret = crypto.randomBytes(64).toString("hex");
 
       await Setting.findOneAndUpdate(
@@ -159,7 +155,11 @@ const userSchema = new mongoose.Schema({
   name: String,
   email: { type: String, unique: true },
   password: String,
-  role: { type: String, enum: ["client", "talent", "admin"], default: "client" },
+  role: {
+    type: String,
+    enum: ["client", "talent", "admin"],
+    default: "client",
+  },
   isAdmin: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
 });
@@ -273,6 +273,7 @@ const jobApplicationSchema = new mongoose.Schema({
   candidatePhone: String,
   resume: String, // File path
   resumeOriginalName: String,
+  enquiryNumber: String,
   portfolioLink: String,
   coverLetter: String,
   status: {
@@ -282,6 +283,17 @@ const jobApplicationSchema = new mongoose.Schema({
   },
   appliedAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
+});
+
+// Enquiry schema to store contact form submissions and counts
+const enquirySchema = new mongoose.Schema({
+  enquiryNumber: String,
+  name: String,
+  email: String,
+  phone: String,
+  projectType: String,
+  message: String,
+  createdAt: { type: Date, default: Date.now },
 });
 
 const User = mongoose.model("User", userSchema);
@@ -294,6 +306,7 @@ const Setting = mongoose.model("Setting", settingSchema);
 const OTP = mongoose.model("OTP", otpSchema);
 const Job = mongoose.model("Job", jobSchema);
 const JobApplication = mongoose.model("JobApplication", jobApplicationSchema);
+const Enquiry = mongoose.model("Enquiry", enquirySchema);
 
 // Ensure uploads dir exists
 const uploadsDir = path.join(__dirname, "../froentend/assets/uploads");
@@ -301,6 +314,16 @@ fs.mkdirSync(uploadsDir, { recursive: true });
 
 // Serve uploads statically
 app.use("/assets/uploads", express.static(uploadsDir));
+// Temporary debug: list recent enquiries (limit 20)
+app.get("/api/debug/enquiries", async (req, res) => {
+  try {
+    const docs = await Enquiry.find().sort({ createdAt: -1 }).limit(20).lean();
+    res.json({ count: docs.length, docs });
+  } catch (err) {
+    console.error("debug enquiries error", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 // ============ PAGE ROUTES ============
 app.get("/", (req, res) =>
@@ -374,16 +397,8 @@ function generateOTP() {
 
 // Step 1: Send OTP for Signup
 app.post("/api/auth/send-signup-otp", async (req, res) => {
-  const {
-    email,
-    password,
-    name,
-    role,
-    title,
-    skills,
-    experience,
-    company
-  } = req.body;
+  const { email, password, name, role, title, skills, experience, company } =
+    req.body;
 
   if (!email || !password || !name || !role) {
     return res
@@ -418,7 +433,7 @@ app.post("/api/auth/send-signup-otp", async (req, res) => {
           title,
           skills,
           experience,
-          company
+          company,
         },
         expiresAt,
       },
@@ -483,22 +498,15 @@ app.post("/api/auth/verify-signup-otp", async (req, res) => {
     }
 
     // Create user with stored data
-    const {
-      name,
-      password,
-      role,
-      title,
-      skills,
-      experience,
-      company
-    } = otpRecord.tempData;
+    const { name, password, role, title, skills, experience, company } =
+      otpRecord.tempData;
 
     const newUser = await User.create({
       name,
       email,
       password,
       role: role || "client",
-      isAdmin: false
+      isAdmin: false,
     });
 
     // If talent, create talent profile
@@ -508,9 +516,9 @@ app.post("/api/auth/verify-signup-otp", async (req, res) => {
         name,
         email,
         title,
-        skills: skills ? skills.split(",").map(s => s.trim()) : [],
+        skills: skills ? skills.split(",").map((s) => s.trim()) : [],
         experience,
-        availability: "Available"
+        availability: "Available",
       });
     }
 
@@ -523,12 +531,17 @@ app.post("/api/auth/verify-signup-otp", async (req, res) => {
       name: newUser.name,
       email: newUser.email,
       role: newUser.role,
-      isAdmin: newUser.isAdmin
+      isAdmin: newUser.isAdmin,
     };
     const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role, isAdmin: user.isAdmin },
+      {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        isAdmin: user.isAdmin,
+      },
       JWT_SECRET,
-      { expiresIn: "24h" }
+      { expiresIn: "24h" },
     );
 
     res.json({
@@ -695,7 +708,12 @@ app.post("/api/auth/verify-login-otp", async (req, res) => {
       success: true,
       message: "Login successful!",
       token,
-      user: { id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin || false },
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin || false,
+      },
     });
   } catch (err) {
     console.error("Verify login OTP error", err);
@@ -769,6 +787,7 @@ app.post("/api/auth/login", async (req, res) => {
 // ============ CONTACT ENDPOINT ============
 app.post("/api/contact", async (req, res) => {
   const { name, email, phone, projectType, message } = req.body;
+  console.log("Contact POST body:", { name, email, phone, projectType });
 
   if (!name || !email || !projectType || !message) {
     return res
@@ -827,7 +846,7 @@ app.post("/api/newsletter", async (req, res) => {
         subject: "New Newsletter Subscriber",
         html: `<h2>New Subscriber Alert</h2><p>Email: <b>${email}</b></p>`,
       });
-    } catch (e) { }
+    } catch (e) {}
 
     // Thank You Email to User
     try {
@@ -1097,10 +1116,10 @@ app.get("/api/admin/stats", authAdmin, async (req, res) => {
         Project.countDocuments(),
         Hire.countDocuments(),
         Contact.countDocuments(),
-        Talent.countDocuments()
+        Talent.countDocuments(),
       ]),
       Hire.find().sort({ _id: -1 }).limit(5).lean(),
-      Contact.find().sort({ _id: -1 }).limit(5).lean()
+      Contact.find().sort({ _id: -1 }).limit(5).lean(),
     ]);
 
     const [users, projects, hires, contacts, talents] = counts;
@@ -1108,7 +1127,7 @@ app.get("/api/admin/stats", authAdmin, async (req, res) => {
     res.json({
       success: true,
       stats: { users, projects, hires, contacts, talents },
-      recent: { recentHires, recentContacts }
+      recent: { recentHires, recentContacts },
     });
   } catch (err) {
     console.error("Admin stats error", err);
@@ -1127,8 +1146,12 @@ app.get("/api/dashboard-data", async (req, res) => {
     // User-specific data: their own hires and profile
     const [user, myHires, publicProjects] = await Promise.all([
       User.findById(decoded.id).select("-password").lean(),
-      Hire.find({ $or: [{ clientId: decoded.id }, { clientEmail: decoded.email }] }).sort({ _id: -1 }).lean(),
-      Project.find({ status: "active" }).limit(10).lean()
+      Hire.find({
+        $or: [{ clientId: decoded.id }, { clientEmail: decoded.email }],
+      })
+        .sort({ _id: -1 })
+        .lean(),
+      Project.find({ status: "active" }).limit(10).lean(),
     ]);
 
     // If admin tokens hit this, they still see their own limited view or we can give more
@@ -1139,7 +1162,7 @@ app.get("/api/dashboard-data", async (req, res) => {
       user,
       hires: myHires,
       projects: publicProjects,
-      isClientView: true
+      isClientView: true,
     });
   } catch (err) {
     console.error("Dashboard data error", err);
@@ -1159,7 +1182,16 @@ app.get("/api/projects", async (req, res) => {
 });
 
 app.post("/api/projects", authAdmin, async (req, res) => {
-  const { title, description, liveUrl, image, category, membersNeeded, scratchLink, marketingStatus } = req.body;
+  const {
+    title,
+    description,
+    liveUrl,
+    image,
+    category,
+    membersNeeded,
+    scratchLink,
+    marketingStatus,
+  } = req.body;
   if (!title) return res.status(400).json({ error: "Title required" });
 
   try {
@@ -1183,7 +1215,17 @@ app.post("/api/projects", authAdmin, async (req, res) => {
 
 app.put("/api/projects/:id", authAdmin, async (req, res) => {
   const { id } = req.params;
-  const { title, description, liveUrl, image, category, status, membersNeeded, scratchLink, marketingStatus } = req.body;
+  const {
+    title,
+    description,
+    liveUrl,
+    image,
+    category,
+    status,
+    membersNeeded,
+    scratchLink,
+    marketingStatus,
+  } = req.body;
 
   try {
     const project = await Project.findByIdAndUpdate(
@@ -1392,6 +1434,26 @@ app.post("/api/job-applications", async (req, res) => {
   }
 
   try {
+    // If ALLOWED_HOSTS is set, ensure request originates from allowed host/referrer
+    const allowedHosts = (process.env.ALLOWED_HOSTS || "")
+      .split(",")
+      .map((h) => h.trim())
+      .filter(Boolean);
+    const hostHeader = req.get("host") || "";
+    const referer = req.get("referer") || req.get("origin") || "";
+    if (
+      allowedHosts.length &&
+      !allowedHosts.some((h) => hostHeader.includes(h) || referer.includes(h))
+    ) {
+      return res
+        .status(403)
+        .json({ error: "Submissions are only accepted from the website" });
+    }
+
+    // Generate an enquiry number for this application
+    const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+    const enquiryNumber = `JOB-${dateStr}-${Math.floor(1000 + Math.random() * 9000)}`;
+
     // Check if job exists
     const job = await Job.findById(jobId);
     if (!job) return res.status(404).json({ error: "Job not found" });
@@ -1399,6 +1461,7 @@ app.post("/api/job-applications", async (req, res) => {
     // Handle resume file upload
     let resumePath = null;
     let resumeOriginalName = null;
+    let resumeFsPath = null;
 
     if (req.files && req.files.resume) {
       const resumeFile = req.files.resume;
@@ -1423,6 +1486,7 @@ app.post("/api/job-applications", async (req, res) => {
 
       await resumeFile.mv(filePath);
 
+      resumeFsPath = filePath;
       resumePath = `/assets/uploads/resumes/${fileName}`;
       resumeOriginalName = resumeFile.name;
     }
@@ -1434,48 +1498,51 @@ app.post("/api/job-applications", async (req, res) => {
       candidateName,
       candidateEmail,
       candidatePhone,
+      enquiryNumber,
       resume: resumePath,
       resumeOriginalName,
       portfolioLink,
       coverLetter,
     });
 
-    // Send email to admin
     const adminEmail =
       process.env.SMTP_USER || "kalpapreeth.contact01@gmail.com";
-    const resumeUrl = resumePath
-      ? `${req.get("host")}${resumePath}`
-      : "No resume";
+
+    // Prepare attachments if resume was uploaded
+    const attachments = resumeFsPath
+      ? [
+          {
+            filename: resumeOriginalName,
+            path: resumeFsPath,
+          },
+        ]
+      : [];
 
     await transporter.sendMail({
       from: process.env.SMTP_USER || "kalpapreeth.contact01@gmail.com",
       to: adminEmail,
-      subject: `New Job Application: ${job.title}`,
+      subject: `New Job Application [${enquiryNumber}]: ${job.title}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2>New Job Application Received</h2>
-          
+          <p><strong>Enquiry Number:</strong> ${enquiryNumber}</p>
           <div style="background: #f5f5f5; padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
             <h3 style="margin-top: 0;">${job.title}</h3>
-            
             <h4>Candidate Information</h4>
             <p><strong>Name:</strong> ${candidateName}</p>
             <p><strong>Email:</strong> ${candidateEmail}</p>
             <p><strong>Phone:</strong> ${candidatePhone || "Not provided"}</p>
-            
             <h4>Application Details</h4>
             <p><strong>Portfolio:</strong> ${portfolioLink ? `<a href="${portfolioLink}">${portfolioLink}</a>` : "Not provided"}</p>
-            <p><strong>Resume:</strong> ${resumeOriginalName ? `<a href="http://${resumeUrl}">Download Resume</a>` : "Not provided"}</p>
-            
+            <p><strong>Resume:</strong> ${resumeOriginalName ? resumeOriginalName : "Not provided"}</p>
             ${coverLetter ? `<h4>Cover Letter</h4><p>${coverLetter}</p>` : ""}
-            
             <h4>Action Required</h4>
             <p>Login to the ATS dashboard to review and manage this application.</p>
           </div>
-          
           <p style="color: #666; font-size: 12px;">This is an automated email from your ATS system.</p>
         </div>
       `,
+      attachments,
     });
 
     // Also send confirmation email to candidate
@@ -1530,6 +1597,109 @@ app.get("/api/job-applications", async (req, res) => {
   }
 });
 
+// Contact form submission - store enquiry and email admin
+app.post("/api/contact", async (req, res) => {
+  const { name, email, phone, projectType, message } = req.body;
+
+  if (!name || !email || !projectType || !message) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  try {
+    const allowedHosts = (process.env.ALLOWED_HOSTS || "")
+      .split(",")
+      .map((h) => h.trim())
+      .filter(Boolean);
+    const hostHeader = req.get("host") || "";
+    const referer = req.get("referer") || req.get("origin") || "";
+    if (
+      allowedHosts.length &&
+      !allowedHosts.some((h) => hostHeader.includes(h) || referer.includes(h))
+    ) {
+      return res
+        .status(403)
+        .json({ error: "Submissions are only accepted from the website" });
+    }
+
+    // generate enquiry number
+    const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+    const enquiryNumber = `ENQ-${dateStr}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const doc = await Enquiry.create({
+      enquiryNumber,
+      name,
+      email,
+      phone,
+      projectType,
+      message,
+    });
+    console.log("New Enquiry created:", {
+      id: doc._id?.toString(),
+      enquiryNumber,
+    });
+
+    // send email to admin
+    const adminEmail =
+      process.env.SMTP_USER || "kalpapreeth.contact01@gmail.com";
+    await transporter.sendMail({
+      from: process.env.SMTP_USER || "kalpapreeth.contact01@gmail.com",
+      to: adminEmail,
+      subject: `New Enquiry [${enquiryNumber}] - ${projectType}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>New Enquiry Received</h2>
+          <p><strong>Enquiry Number:</strong> ${enquiryNumber}</p>
+          <div style="background: #f5f5f5; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+            <p><strong>Project Type:</strong> ${projectType}</p>
+            <h4>Message</h4>
+            <p>${message}</p>
+          </div>
+          <p style="color:#666; font-size:12px;">This is an automated email from your website.</p>
+        </div>
+      `,
+    });
+
+    // confirmation email to user (optional)
+    try {
+      await transporter.sendMail({
+        from: process.env.SMTP_USER || "kalpapreeth.contact01@gmail.com",
+        to: email,
+        subject: `We received your enquiry [${enquiryNumber}]`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h3>Thank you, ${name}</h3>
+            <p>We've received your enquiry. Your reference number is <strong>${enquiryNumber}</strong>. Our team will contact you within 24 hours.</p>
+            <p>Regards,<br/>Kalpa Preeth Team</p>
+          </div>
+        `,
+      });
+    } catch (err) {
+      console.warn("Failed to send confirmation email to user", err);
+    }
+
+    res.json({ success: true, enquiryNumber, doc });
+  } catch (err) {
+    console.error("contact submission error", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Return count of enquiries received today
+app.get("/api/enquiries/today", async (req, res) => {
+  try {
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    const count = await Enquiry.countDocuments({ createdAt: { $gte: start } });
+    res.json({ count });
+  } catch (err) {
+    console.error("enquiries today error", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // Get applications for specific job
 app.get("/api/jobs/:jobId/applications", authAdmin, async (req, res) => {
   try {
@@ -1577,7 +1747,8 @@ app.patch("/api/job-applications/:id", authAdmin, async (req, res) => {
       from: process.env.SMTP_USER || "kalpapreeth.contact01@gmail.com",
       to: application.candidateEmail,
       subject: `Career Update: ${application.jobTitle}`,
-      html: renderEmailTemplate(`
+      html: renderEmailTemplate(
+        `
         <h2 style="color: #1e3a8a; margin-top: 0;">Application Status Update</h2>
         <p>Dear <span class="highlight">${application.candidateName}</span>,</p>
         <p style="font-size: 18px; color: #1e3a8a; font-weight: 600;">${message}</p>
@@ -1586,7 +1757,9 @@ app.patch("/api/job-applications/:id", authAdmin, async (req, res) => {
           <p style="margin: 0; font-size: 14px;">Our hiring team has updated your application status to: <span class="status-badge">${status}</span></p>
         </div>
         <p>We appreciate your interest in joining Kalpapreeth IT Solutions. If you have any questions, feel free to reply to this email.</p>
-      `, "HR Update"),
+      `,
+        "HR Update",
+      ),
     });
 
     res.json({ success: true, application });

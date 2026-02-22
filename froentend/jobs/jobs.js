@@ -255,8 +255,9 @@ async function handleApplicationSubmit(e) {
     const data = await response.json();
 
     if (response.ok) {
+      const ref = data?.application?.enquiryNumber || data?.enquiryNumber || "";
       showNotification(
-        "Application submitted successfully! Check your email for confirmation.",
+        `Application submitted successfully${ref ? ` (Ref: ${ref})` : ""}. Check your email for confirmation.`,
         "success",
       );
       closeModal();
