@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Openings - Kalpa Preeth</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/assets/kp2.1.png" type="image/png" />
+    <link rel="stylesheet" href="jobs.css" />
+  </head>
+  <body>
+    <div class="jobs-container">
+      <!-- Header -->
+      <header class="jobs-header">
+        <div class="header-content">
+          <h1>Join Our Team</h1>
+          <p>Explore exciting career opportunities at Kalpa Preeth</p>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Filters -->
+        <aside class="filters-sidebar">
+          <h3>Filter Jobs</h3>
+
+          <div class="filter-group">
+            <label>Job Type</label>
+            <div class="checkbox-group">
+              <label class="checkbox">
+                <input
+                  type="checkbox"
+                  class="job-type-filter"
+                  value="Full-time"
+                />
+                <span>Full-time</span>
+              </label>
+              <label class="checkbox">
+                <input
+                  type="checkbox"
+                  class="job-type-filter"
+                  value="Part-time"
+                />
+                <span>Part-time</span>
+              </label>
+              <label class="checkbox">
+                <input
+                  type="checkbox"
+                  class="job-type-filter"
+                  value="Contract"
+                />
+                <span>Contract</span>
+              </label>
+              <label class="checkbox">
+                <input
+                  type="checkbox"
+                  class="job-type-filter"
+                  value="Freelance"
+                />
+                <span>Freelance</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label for="departmentFilter">Department</label>
+            <select id="departmentFilter" class="filter-select">
+              <option value="">All Departments</option>
+              <option value="Engineering">Engineering</option>
+              <option value="Design">Design</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Sales">Sales</option>
+              <option value="HR">HR</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="searchJobs">Search</label>
+            <input
+              type="text"
+              id="searchJobs"
+              placeholder="Search jobs..."
+              class="search-input"
+            />
+          </div>
+
+          <button id="resetFilters" class="reset-btn">Reset Filters</button>
+        </aside>
+
+        <!-- Jobs List -->
+        <section class="jobs-grid">
+          <div class="jobs-header-section">
+            <h2>Available Positions</h2>
+            <span id="jobCount" class="job-count">0 jobs</span>
+          </div>
+
+          <div id="jobsList" class="jobs-list">
+            <div class="loading">Loading jobs...</div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Job Application Modal -->
+    <div id="applicationModal" class="modal">
+      <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-header">
+          <h2 id="modalJobTitle"></h2>
+          <p id="modalJobType"></p>
+        </div>
+
+        <div class="modal-body">
+          <div class="job-details-section">
+            <div class="detail-row">
+              <span class="label">Location:</span>
+              <span id="modalJobLocation"></span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Department:</span>
+              <span id="modalJobDepartment"></span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Experience:</span>
+              <span id="modalJobExperience"></span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Salary:</span>
+              <span id="modalJobSalary"></span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Required Skills:</span>
+              <div id="modalJobSkills" class="skills-tags"></div>
+            </div>
+
+            <div class="job-description">
+              <h4>Job Description</h4>
+              <p id="modalJobDescription"></p>
+            </div>
+          </div>
+
+          <div class="application-form-section">
+            <h3>Apply for this Position</h3>
+            <form id="applicationForm" class="application-form">
+              <div class="form-group">
+                <label for="candidateName">Full Name *</label>
+                <input type="text" id="candidateName" required />
+              </div>
+
+              <div class="form-group">
+                <label for="candidateEmail">Email Address *</label>
+                <input type="email" id="candidateEmail" required />
+              </div>
+
+              <div class="form-group">
+                <label for="candidatePhone">Phone Number</label>
+                <input type="tel" id="candidatePhone" />
+              </div>
+
+              <div class="form-group">
+                <label for="portfolioLink">Portfolio Link</label>
+                <input
+                  type="url"
+                  id="portfolioLink"
+                  placeholder="https://..."
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="resume">Resume (PDF only) *</label>
+                <input type="file" id="resume" accept=".pdf" required />
+                <small>Maximum file size: 10MB. PDF format only.</small>
+              </div>
+
+              <div class="form-group">
+                <label for="coverLetter">Cover Letter</label>
+                <textarea
+                  id="coverLetter"
+                  rows="5"
+                  placeholder="Tell us why you're a great fit for this role..."
+                ></textarea>
+              </div>
+
+              <button type="submit" class="submit-btn">
+                Submit Application
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="jobs.js"></script>
+  </body>
+</html>

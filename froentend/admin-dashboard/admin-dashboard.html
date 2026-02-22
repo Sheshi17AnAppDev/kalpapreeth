@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Kalpa Preeth</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="admin-dashboard.css">
+</head>
+
+<body>
+
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img src="/assets/kp2.1.png" alt="Kalpa Preeth Logo">
+        <span>KALPA PREETH</span>
+      </div>
+
+      <nav class="nav-group">
+        <div class="nav-item active" onclick="switchTab('overview', this)">
+          <i class="fas fa-grid-2"></i>
+          <span>Overview</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('projects', this)">
+          <i class="fas fa-rocket"></i>
+          <span>Projects</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('jobs', this)">
+          <i class="fas fa-briefcase"></i>
+          <span>Job Postings</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('employees', this)">
+          <i class="fas fa-users"></i>
+          <span>Talent Pool</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('messages', this)">
+          <i class="fas fa-envelope"></i>
+          <span>Messages</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('settings', this)">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="logout-btn" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Sign Out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-container">
+      <header class="top-header">
+        <div class="header-greeting">
+          <h1 id="panelTitle">Dashboard Overview</h1>
+          <p id="currentDate"></p>
+        </div>
+        <div class="user-profile">
+          <span id="adminName">Admin User</span>
+          <div class="user-avatar">AD</div>
+        </div>
+      </header>
+
+      <!-- Sections Container -->
+      <div id="sections-container">
+
+        <!-- Overview Section -->
+        <section id="overview" class="section active">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-details">
+                <h3>Total Projects</h3>
+                <div class="stat-value" id="count-projects">0</div>
+              </div>
+              <div class="stat-icon blue"><i class="fas fa-folder-open"></i></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-details">
+                <h3>Total Applications</h3>
+                <div class="stat-value" id="count-applications">0</div>
+              </div>
+              <div class="stat-icon green"><i class="fas fa-file-invoice"></i></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-details">
+                <h3>Available Talent</h3>
+                <div class="stat-value" id="count-talents">0</div>
+              </div>
+              <div class="stat-icon purple"><i class="fas fa-user-check"></i></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-details">
+                <h3>New Messages</h3>
+                <div class="stat-value" id="count-messages">0</div>
+              </div>
+              <div class="stat-icon amber"><i class="fas fa-comment-dots"></i></div>
+            </div>
+          </div>
+
+          <div class="grid-blocks">
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2>Recent Hire Requests</h2>
+                <button class="btn-action" style="font-size: 0.8rem; color: var(--primary);"
+                  onclick="switchTab('applications')">View All</button>
+              </div>
+              <div id="recent-hires-list">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+            <div class="card-panel">
+              <div class="panel-header">
+                <h2>Quick Actions</h2>
+              </div>
+              <button class="btn-action btn-save" style="width: 100%; margin-bottom: 12px;"
+                onclick="showModal('project')">+ New Project</button>
+              <button class="btn-action"
+                style="width: 100%; background: #f1f5f9; color: var(--text-main); margin-bottom: 12px;"
+                onclick="showModal('job')">+ Post a Job</button>
+              <button class="btn-action" style="width: 100%; background: #f1f5f9; color: var(--text-main);"
+                onclick="switchTab('settings')">Update Settings</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Project Management Section -->
+        <section id="projects" class="section">
+          <div class="card-panel">
+            <div class="panel-header">
+              <h2>Project Management</h2>
+              <button class="btn-action btn-save" onclick="showModal('project')">+ Create Project</button>
+            </div>
+            <div id="projects-list-full" class="table-container">
+              <!-- Items populated from JS -->
+              <p style="color: var(--text-muted);">Loading projects...</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings" class="section">
+          <div class="card-panel">
+            <h2>System Settings</h2>
+            <form id="settingsForm" style="margin-top: 20px;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Clients Count</label>
+                  <input type="number" id="set-clients">
+                </div>
+                <div class="form-group">
+                  <label>Team Size</label>
+                  <input type="number" id="set-team">
+                </div>
+              </div>
+              <button type="submit" class="btn-action btn-save">Save Configuration</button>
+            </form>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <div id="modal-project" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Create New Project</h2>
+      </div>
+      <form id="projectForm">
+        <div class="form-group">
+          <label>Project Title</label>
+          <input type="text" id="p-title" required>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="p-desc" rows="4"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category</label>
+            <select id="p-cat">
+              <option value="web">Web Development</option>
+              <option value="mobile">Mobile App</option>
+              <option value="design">UI/UX Design</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Members needed</label>
+            <input type="number" id="p-members" value="1">
+          </div>
+        </div>
+        <div class="form-actions" style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn-action" style="background: #f1f5f9;" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn-action btn-save">Launch Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="admin-dashboard.js"></script>
+  <script>
+    // Tab switching logic
+    function switchTab(tabId, el) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      if (el) el.classList.add('active');
+
+      document.getElementById('panelTitle').textContent = tabId.charAt(0).toUpperCase() + tabId.slice(1);
+    }
+
+    function showModal(type) {
+      document.getElementById(`modal-${type}`).classList.add('active');
+    }
+
+    function closeModal() {
+      document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+    }
+
+    document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Dashboard - Kalpa Preeth</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/assets/kp2.1.png" type="image/png" />
+    <link rel="stylesheet" href="client-dashboard.css" />
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-section">
+            <img src="/assets/kp2.1.png" alt="Logo" class="logo" />
+            <span>Kalpa Preeth</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="#" class="nav-item active" data-tab="overview">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M3 12L10 5L17 12V20H3V12Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M9 20V14H15V20"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>Overview</span>
+          </a>
+          <a href="#" class="nav-item" data-tab="services">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <rect
+                x="3"
+                y="3"
+                width="18"
+                height="18"
+                rx="2"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path d="M3 9H21M9 3V21" stroke="currentColor" stroke-width="2" />
+            </svg>
+            <span>Available Services</span>
+          </a>
+          <a href="#" class="nav-item" data-tab="active-hires">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path
+                d="M10 16.17L6.83 13L5.41 14.41L10 19L19 10L17.59 8.59L10 16.17Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span>Active Hires</span>
+          </a>
+          <a href="#" class="nav-item" data-tab="completed">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+            <span>Completed Hires</span>
+          </a>
+          <a href="#" class="nav-item" data-tab="profile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <circle
+                cx="12"
+                cy="8"
+                r="4"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path
+                d="M4 20C4 16.134 7.582 13 12 13C16.418 13 20 16.134 20 20"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+            <span>My Profile</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button class="logout-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M17 16L21 12M21 12L17 8M21 12H9M13 3H8C5.791 3 4 4.791 4 7V17C4 19.209 5.791 21 8 21H13"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Logout
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Top Bar -->
+        <div class="topbar">
+          <div class="topbar-left">
+            <h2 id="pageTitle">Overview</h2>
+          </div>
+          <div class="topbar-right">
+            <div class="user-info">
+              <span id="userName">Welcome, User</span>
+              <img src="/assets/kp2.1.png" alt="User" class="user-avatar" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Sections -->
+        <div class="content">
+          <!-- Overview Tab -->
+          <section id="overview" class="tab-content active">
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div
+                  class="stat-icon"
+                  style="background: rgba(0, 255, 157, 0.2)"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M10 16.17L6.83 13L5.41 14.41L10 19L19 10L17.59 8.59L10 16.17Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div class="stat-content">
+                  <h3 id="activeCount">0</h3>
+                  <p>Active Hires</p>
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div
+                  class="stat-icon"
+                  style="background: rgba(33, 240, 255, 0.2)"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M3 12L10 5L17 12V20H3V12Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M9 20V14H15V20"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+                <div class="stat-content">
+                  <h3 id="completedCount">0</h3>
+                  <p>Completed Hires</p>
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div
+                  class="stat-icon"
+                  style="background: rgba(141, 96, 255, 0.2)"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M12 6V12L16 14"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </div>
+                <div class="stat-content">
+                  <h3 id="totalSpent">$0</h3>
+                  <p>Total Spent</p>
+                </div>
+              </div>
+
+              <div class="stat-card">
+                <div
+                  class="stat-icon"
+                  style="background: rgba(255, 107, 107, 0.2)"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M8 12H16M12 8V16"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </div>
+                <div class="stat-content">
+                  <h3 id="servicesCount">0</h3>
+                  <p>Services Available</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="recent-section">
+              <h3>Recent Activity</h3>
+              <div class="activity-list" id="activityList">
+                <p class="empty-state">No recent activity</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Available Services Tab -->
+          <section id="services" class="tab-content">
+            <div class="services-header">
+              <div class="search-filter">
+                <input
+                  type="text"
+                  id="searchServices"
+                  placeholder="Search services..."
+                  class="search-input"
+                />
+                <select id="categoryFilter" class="filter-select">
+                  <option value="">All Categories</option>
+                  <option value="design">Design</option>
+                  <option value="development">Development</option>
+                  <option value="marketing">Marketing</option>
+                  <option value="consulting">Consulting</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="services-grid" id="servicesGrid">
+              <div class="loading">Loading services...</div>
+            </div>
+          </section>
+
+          <!-- Active Hires Tab -->
+          <section id="active-hires" class="tab-content">
+            <div class="hires-list" id="activeHiresList">
+              <p class="empty-state">No active hires</p>
+            </div>
+          </section>
+
+          <!-- Completed Hires Tab -->
+          <section id="completed" class="tab-content">
+            <div class="hires-list" id="completedHiresList">
+              <p class="empty-state">No completed hires</p>
+            </div>
+          </section>
+
+          <!-- Profile Tab -->
+          <section id="profile" class="tab-content">
+            <div class="profile-container">
+              <h3>Client Profile</h3>
+              <form id="profileForm" class="profile-form">
+                <div class="form-group">
+                  <label>Full Name</label>
+                  <input
+                    type="text"
+                    id="profileName"
+                    placeholder="Your name"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    id="profileEmail"
+                    placeholder="Your email"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label>Phone</label>
+                  <input
+                    type="tel"
+                    id="profilePhone"
+                    placeholder="Your phone number"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label>Company</label>
+                  <input
+                    type="text"
+                    id="profileCompany"
+                    placeholder="Company name"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label>Bio</label>
+                  <textarea
+                    id="profileBio"
+                    placeholder="Tell us about yourself"
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="save-btn">Save Changes</button>
+              </form>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- Service Details Modal -->
+    <div id="serviceModal" class="modal">
+      <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-header">
+          <img
+            id="modalServiceImage"
+            src=""
+            alt="Service"
+            class="modal-service-image"
+          />
+        </div>
+        <div class="modal-body">
+          <h2 id="modalServiceTitle"></h2>
+          <p id="modalServiceDesc"></p>
+          <div class="modal-details">
+            <div class="detail-item">
+              <span>Price</span>
+              <h3 id="modalServicePrice">$0</h3>
+            </div>
+            <div class="detail-item">
+              <span>Duration</span>
+              <h3 id="modalServiceDuration">N/A</h3>
+            </div>
+            <div class="detail-item">
+              <span>Category</span>
+              <h3 id="modalServiceCategory">N/A</h3>
+            </div>
+          </div>
+          <div class="modal-action">
+            <button id="hireServiceBtn" class="hire-btn">
+              Hire This Service
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="client-dashboard.js"></script>
+  </body>
+</html>

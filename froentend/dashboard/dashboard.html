@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Dashboard | Kalpa Preeth</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2 style="font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px;">KALPA</h2>
+        <p style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Client Portal</p>
+      </div>
+      <nav style="flex: 1;">
+        <div class="nav-item active" onclick="switchTab('overview', this)">
+          <i class="fas fa-home"></i> <span>Overview</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('hiresSection', this)">
+          <i class="fas fa-user-tie"></i> <span>My Requests</span>
+        </div>
+        <div class="nav-item" onclick="switchTab('projectsSection', this)">
+          <i class="fas fa-rocket"></i> <span>Recommendations</span>
+        </div>
+      </nav>
+      <div class="nav-item logout-btn-sidebar" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div>
+          <h1 id="welcomeHeader" style="font-size: 1.75rem; font-weight: 800;">Dashboard</h1>
+          <p id="dateDisplay" style="color: var(--text-muted); font-weight: 500;"></p>
+        </div>
+        <button id="refreshBtn"
+          style="background: white; border: 1px solid var(--border); padding: 10px 20px; border-radius: 100px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+          <i class="fas fa-sync-alt" style="color: var(--primary);"></i> Refresh
+        </button>
+      </header>
+
+      <section id="overview" class="section active">
+        <div class="welcome-card">
+          <h2 id="welcomeName">Welcome, User!</h2>
+          <p>You have new updates available. Check your request status below.</p>
+        </div>
+
+        <div class="stats-grid" id="overviewStats"></div>
+
+        <div class="content-panel">
+          <h3 style="font-weight: 700; margin-bottom: 20px;">Recent Activity</h3>
+          <div id="recentActivity">
+            <p style="color: var(--text-muted); font-style: italic;">Fetching your history...</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="hiresSection" class="section">
+        <div class="content-panel">
+          <h2 style="font-weight: 700; margin-bottom: 30px;">Hiring History</h2>
+          <div id="hiresTable"></div>
+        </div>
+      </section>
+
+      <section id="projectsSection" class="section">
+        <div class="content-panel">
+          <h2 style="font-weight: 700; margin-bottom: 30px;">Technological Solutions</h2>
+          <div id="projectsGrid"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="dashboard.js"></script>
+  <script>
+    function switchTab(section, el) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+      document.getElementById(section).classList.add('active');
+      if (el) el.classList.add('active');
+    }
+
+    document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('en-US', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    window.renderOverview = function (data) {
+      const statsGrid = document.getElementById('overviewStats');
+      document.getElementById('welcomeName').textContent = `Welcome, ${data.user?.name || 'User'}!`;
+
+      const stats = [
+        { label: 'Hire Requests', value: data.hires.length, icon: 'fa-user-tie' },
+        { label: 'Recommended', value: data.projects.length, icon: 'fa-rocket' },
+        { label: 'Status', value: 'Verified', icon: 'fa-check-circle' }
+      ];
+
+      statsGrid.innerHTML = stats.map(s => `
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas ${s.icon}"></i></div>
+          <div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">${s.label}</div>
+            <div style="font-size: 1.5rem; font-weight: 800; color: #0f172a;">${s.value}</div>
+          </div>
+        </div>
+      `).join('');
+
+      const recentActivity = document.getElementById('recentActivity');
+      if (data.hires.length > 0) {
+        recentActivity.innerHTML = `<table>
+          <thead><tr><th>Professional</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody>
+            ${data.hires.slice(0, 3).map(h => `
+              <tr>
+                <td>${h.talentName}</td>
+                <td><span class="status-badge status-active">${h.status}</span></td>
+                <td>${new Date(h.timestamp).toLocaleDateString()}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>`;
+      } else {
+        recentActivity.innerHTML = '<p style="padding: 10px 0; color: #64748b;">No recent hire requests found.</p>';
+      }
+    };
+
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+  </script>
+</body>
+
+</html>

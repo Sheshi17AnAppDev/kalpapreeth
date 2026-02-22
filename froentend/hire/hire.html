@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hire Talent - Kalpa Preeth</title>
+    <link rel="icon" href="/assets/kp2.1.png" type="image/png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/hire/hire.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/" class="logo">
+          <img src="/assets/kp2.1.png" alt="Logo" class="logo-icon" />
+          Kalpa Preeth
+        </a>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/service">Services</a></li>
+          <li><a href="/hire" class="active">Hire</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+        <div class="nav-buttons">
+          <a href="/login" class="btn btn-primary">Login</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="hire-page">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1>Hire Top Talent</h1>
+          <p>Find and hire the best professionals for your projects</p>
+        </div>
+      </section>
+
+      <!-- Talents Grid -->
+      <section class="talents-section">
+        <div class="container">
+          <div class="section-header">
+            <h2>Available Talents</h2>
+            <div class="filters">
+              <input
+                type="text"
+                id="searchInput"
+                class="search-input"
+                placeholder="Search by name or skill..."
+              />
+            </div>
+          </div>
+
+          <div id="talentsGrid" class="talents-grid">
+            <div class="loading">Loading talents...</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Hire Modal -->
+    <div id="hireModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Hire <span id="talentNameInModal"></span></h2>
+          <button class="modal-close" onclick="closeHireModal()">
+            &times;
+          </button>
+        </div>
+        <form id="hireForm" class="modal-body">
+          <input type="hidden" id="talentIdInput" />
+          <input type="hidden" id="talentNameInput" />
+          <input type="hidden" id="talentEmailInput" />
+
+          <div class="form-group">
+            <label>Project Name</label>
+            <input type="text" id="projectName" required />
+          </div>
+
+          <div class="form-group">
+            <label>Project Description</label>
+            <textarea id="projectDescription" rows="3"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Role/Position</label>
+              <input type="text" id="role" required />
+            </div>
+            <div class="form-group">
+              <label>Budget</label>
+              <input type="text" id="budget" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Duration</label>
+            <input type="text" id="duration" placeholder="e.g., 3 months" />
+          </div>
+
+          <div class="form-group">
+            <label>Message to Talent</label>
+            <textarea
+              id="message"
+              rows="4"
+              placeholder="Tell them why you'd like to hire them..."
+            ></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="closeHireModal()"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Send Hire Request
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Talent Detail Modal -->
+    <div id="talentModal" class="modal">
+      <div class="modal-content talent-detail">
+        <div class="modal-header">
+          <h2>Talent Profile</h2>
+          <button class="modal-close" onclick="closeTalentModal()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body" id="talentDetailBody">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+
+    <script src="/hire/hire.js"></script>
+  </body>
+</html>

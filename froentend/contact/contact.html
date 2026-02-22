@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - Kalpa Preeth Pvt. Ltd.</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/assets/kp2.1.png" type="image/png" />
+    <link rel="stylesheet" href="contact.css" />
+  </head>
+  <body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+      <div class="floating-shape shape-1"></div>
+      <div class="floating-shape shape-2"></div>
+      <div class="floating-shape shape-3"></div>
+      <div class="floating-shape shape-4"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="logo">
+          <img
+            src="/assets/kp2.1.png"
+            alt="Kalpa Preeth Logo"
+            class="logo-icon"
+          />
+          Kalpa Preeth
+        </a>
+
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="../home/home.html">Home</a></li>
+          <li><a href="../about/about.html">About Us</a></li>
+          <li><a href="../service/services.html">Services</a></li>
+          <li><a href="../blog/blog.html">Blog</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+          <a href="/login" class="btn btn-primary">Login</a>
+        </div>
+
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="contact-hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>Get In Touch</span>
+          </div>
+          <h1>
+            Let's Build <span class="gradient-text">The Future</span> Together
+          </h1>
+          <p>
+            Ready to transform your ideas into reality? We'd love to hear from
+            you. Let's discuss how we can collaborate to create something
+            extraordinary.
+          </p>
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-number" data-count="24">0</div>
+              <div class="stat-label">Response Hours</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number" data-count="0">0</div>
+              <div class="stat-label">Happy Clients</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number" data-count="0">0</div>
+              <div class="stat-label">Projects</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number" id="enquiriesToday" data-count="0">
+                0
+              </div>
+              <div class="stat-label">Enquiries Today</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="container">
+        <div class="contact-grid">
+          <!-- Contact Form -->
+          <div class="contact-form-container">
+            <div class="form-header">
+              <h2>Send Us a Message</h2>
+              <p>
+                Fill out the form below and we'll get back to you within 24
+                hours
+              </p>
+            </div>
+
+            <form id="contactForm" class="contact-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fullname" class="field-label">Full Name</label>
+                  <div class="input-field">
+                    <input type="text" id="fullname" name="fullname" required />
+                    <div class="input-underline"></div>
+                    <div class="input-icon">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M20 21V19C20 16.7909 18.2091 15 16 15H8C5.79086 15 4 16.7909 4 19V21"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        />
+                        <circle
+                          cx="12"
+                          cy="7"
+                          r="4"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="email" class="field-label">Email Address</label>
+                  <div class="input-field">
+                    <input type="email" id="email" name="email" required />
+                    <div class="input-underline"></div>
+                    <div class="input-icon">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <rect
+                          x="2"
+                          y="4"
+                          width="20"
+                          height="16"
+                          rx="3"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        />
+                        <path
+                          d="M2 7L12 13L22 7"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="phone" class="field-label"
+                    >Phone Number (Optional)</label
+                  >
+                  <div class="input-field">
+                    <input type="tel" id="phone" name="phone" />
+                    <div class="input-underline"></div>
+                    <div class="input-icon">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M3 5C3 3.89543 3.89543 3 5 3H8.27924C8.70967 3 9.09181 3.27543 9.22792 3.68377L10.7257 8.17721C10.8831 8.64932 10.6694 9.16531 10.2243 9.38787L7.96701 10.5165C9.06925 12.9612 11.0388 14.9308 13.4835 16.033L14.6121 13.7757C14.8347 13.3306 15.3507 13.1169 15.8228 13.2743L20.3162 14.7721C20.7246 14.9082 21 15.2903 21 15.7208V19C21 20.1046 20.1046 21 19 21H18C9.71573 21 3 14.2843 3 6V5Z"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="projectType" class="field-label"
+                    >Project Type</label
+                  >
+                  <div class="input-field">
+                    <select id="projectType" name="projectType" required>
+                      <option value="">Select Project Type</option>
+                      <option value="web-development">Web Development</option>
+                      <option value="mobile-app">Mobile App</option>
+                      <option value="ecommerce">E-commerce</option>
+                      <option value="consultation">Consultation</option>
+                      <option value="other">Other</option>
+                    </select>
+                    <div class="input-underline"></div>
+                    <div class="input-icon">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M19 9l-7 7-7-7"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="message" class="field-label">Your Message</label>
+                <div class="input-field textarea-field">
+                  <textarea id="message" name="message" required></textarea>
+                  <div class="input-underline"></div>
+                  <div class="input-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M12 6V12M12 12L16 14M12 12L8 14M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-large btn-primary submit-btn"
+              >
+                <span class="btn-text">Send Message</span>
+                <div class="btn-loader"></div>
+                <div class="btn-hover-effect"></div>
+              </button>
+            </form>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="contact-info-panel">
+            <div class="info-header">
+              <h2>Contact Information</h2>
+              <p>Multiple ways to reach us. Choose what works best for you.</p>
+            </div>
+
+            <div class="info-items">
+              <div class="info-item">
+                <div class="info-icon">
+                  <div class="icon-bg"></div>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M17.6569 16.6569C16.7202 17.5935 14.7616 19.5521 13.4138 20.8999C12.6327 21.681 11.3677 21.6814 10.5866 20.9003C9.26234 19.576 7.34159 17.6553 6.34315 16.6569C3.21895 13.5327 3.21895 8.46734 6.34315 5.34315C9.46734 2.21895 14.5327 2.21895 17.6569 5.34315C20.781 8.46734 20.781 13.5327 17.6569 16.6569Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <circle
+                      cx="12"
+                      cy="10"
+                      r="3"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </div>
+                <div class="info-content">
+                  <h3>Visit Our Office</h3>
+                  <p>123 Innovation Drive, Tech City</p>
+                  <p>Digital District, 54321</p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <div class="icon-bg"></div>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M3 5C3 3.89543 3.89543 3 5 3H8.27924C8.70967 3 9.09181 3.27543 9.22792 3.68377L10.7257 8.17721C10.8831 8.64932 10.6694 9.16531 10.2243 9.38787L7.96701 10.5165C9.06925 12.9612 11.0388 14.9308 13.4835 16.033L14.6121 13.7757C14.8347 13.3306 15.3507 13.1169 15.8228 13.2743L20.3162 14.7721C20.7246 14.9082 21 15.2903 21 15.7208V19C21 20.1046 20.1046 21 19 21H18C9.71573 21 3 14.2843 3 6V5Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </div>
+                <div class="info-content">
+                  <h3>Call Us</h3>
+                  <p>+1 (555) 123-4567</p>
+                  <p>Mon - Fri, 9:00 AM - 6:00 PM</p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <div class="icon-bg"></div>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect
+                      x="2"
+                      y="4"
+                      width="20"
+                      height="16"
+                      rx="3"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M2 7L12 13L22 7"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </div>
+                <div class="info-content">
+                  <h3>Email Us</h3>
+                  <p>contact@kalpapreeth.com</p>
+                  <p>support@kalpapreeth.com</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="social-section">
+              <h3>Follow Us</h3>
+              <div class="social-links">
+                <a href="#" class="social-link" aria-label="LinkedIn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M6 9H2V21H6V9Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                    <circle
+                      cx="4"
+                      cy="4"
+                      r="2"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </a>
+                <a href="#" class="social-link" aria-label="Twitter">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M22 4.01C21 4.5 20.02 4.72 19 5C17.879 3.735 16.217 3.665 14.62 4.263C13.023 4.861 11.977 6.323 12 8V9C8.755 9.1 5.865 7.765 4 5.5C4 5.5 -0.182 12.433 8 16C6.128 17.247 4.261 18.088 2 18C5.308 19.803 8.913 20.423 12.034 19.517C15.614 18.477 18.556 15.794 19.685 11.775C20.0218 10.5527 20.189 9.28987 20.182 8.022C20.182 7.773 21.692 5.25 22 4.009V4.01Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </a>
+                <a href="#" class="social-link" aria-label="GitHub">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M9 19C4.7 20.4 4.7 16.5 3 16M15 21V17.7C15.1 16.7 15 15.8 14.8 15.1C16.8 14.8 19 13.9 19 9.5C18.9 8.4 18.5 7.4 17.8 6.6C18.1 5.5 18.1 4.3 17.8 3.2C17.8 3.2 16.7 3 14.8 4.3C13.1 3.9 11.3 3.9 9.6 4.3C7.7 3 6.6 3.2 6.6 3.2C6.3 4.3 6.3 5.5 6.6 6.6C5.9 7.4 5.5 8.4 5.5 9.5C5.5 13.8 7.7 14.8 9.7 15.1C9.5 15.8 9.4 16.6 9.5 17.7V21"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </a>
+                <a href="#" class="social-link" aria-label="Telegram">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M21 5L2 12.5L9 15M21 5L15 21L9 15M21 5L9 15"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Find Us Here</h2>
+          <p>Visit our headquarters or connect with us remotely</p>
+        </div>
+        <div class="map-container">
+          <div class="map-placeholder">
+            <div class="map-content">
+              <div class="map-icon">🗺️</div>
+              <h3>Interactive Map</h3>
+              <p>123 Innovation Drive, Tech City</p>
+              <p>Digital District, 54321</p>
+              <button class="btn btn-secondary">Get Directions</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge">FAQ</div>
+          <h2>Frequently Asked Questions</h2>
+          <p>Quick answers to common questions about working with us</p>
+        </div>
+
+        <div class="faq-grid">
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>What's your typical response time?</h3>
+              <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>
+                We typically respond to all inquiries within 24 hours during
+                business days. For urgent matters, please call our direct line.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>Do you offer free consultations?</h3>
+              <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>
+                Yes! We offer a free 30-minute initial consultation to discuss
+                your project requirements and see if we're the right fit.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-question">
+              <h3>What industries do you specialize in?</h3>
+              <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>
+                We work across various industries including technology,
+                healthcare, finance, education, and e-commerce, with a focus on
+                AI and digital transformation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <div class="logo">
+              <img
+                src="/assets/kp2.1.png"
+                alt="Kalpa Preeth Logo"
+                class="logo-icon"
+              />
+              Kalpa Preeth
+            </div>
+            <p>Building tomorrow's innovations today.</p>
+          </div>
+          <div class="footer-copyright">
+            <p>&copy; 2024 Kalpa Preeth Pvt. Ltd. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="contact.js"></script>
+  </body>
+</html>

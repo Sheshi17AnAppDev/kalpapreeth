@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - Kalpa Preeth Pvt. Ltd.</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/assets/kp2.1.png" type="image/png" />
+    <link rel="stylesheet" href="blog.css" />
+  </head>
+  <body>
+    <!-- Background Animation -->
+    <div class="background-animation">
+      <div class="floating-shape shape-1"></div>
+      <div class="floating-shape shape-2"></div>
+      <div class="floating-shape shape-3"></div>
+      <div class="floating-shape shape-4"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/" class="logo">
+          <img
+            src="/assets/kp2.1.png"
+            alt="Kalpa Preeth Logo"
+            class="logo-icon"
+          />
+          Kalpa Preeth
+        </a>
+
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="/home">Home</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/service">Services</a></li>
+          <li><a href="/blog" class="active">Blog</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+          <a href="/login" class="btn btn-primary">Login</a>
+        </div>
+
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>Latest Insights</span>
+          </div>
+          <h1>Insights & <span class="gradient-text">Articles</span></h1>
+          <p>
+            Explore the latest trends, innovations, and thought leadership in
+            technology, AI, and digital transformation from our team of experts.
+          </p>
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-number" data-count="0">0</div>
+              <div class="stat-label">Articles Published</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number" data-count="0">0</div>
+              <div class="stat-label">Expert Writers</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number" data-count="0">0</div>
+              <div class="stat-label">Million Readers</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Post -->
+    <section class="featured-post">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge">Featured</div>
+          <h2>Trending Now</h2>
+        </div>
+
+        <div class="featured-card">
+          <div class="featured-content">
+            <div class="post-category">Technology</div>
+            <h3>The Quantum Leap in AI: What's Next for Machine Learning?</h3>
+            <p class="featured-excerpt">
+              Explore how quantum computing is set to revolutionize artificial
+              intelligence as we know it. Discover the implications for machine
+              learning, data processing, and the future of intelligent systems.
+            </p>
+            <div class="post-meta">
+              <div class="author">
+                <div class="author-avatar">JD</div>
+                <div class="author-info">
+                  <div class="author-name">Jane Doe</div>
+                  <div class="post-date">March 15, 2024 · 8 min read</div>
+                </div>
+              </div>
+              <a href="#" class="btn btn-primary">
+                <span>Read Article</span>
+                <div class="btn-hover-effect"></div>
+              </a>
+            </div>
+          </div>
+          <div class="featured-image">
+            <img
+              src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80"
+              alt="Quantum Computing"
+            />
+            <div class="image-overlay"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-badge">Latest Articles</div>
+          <h2>Explore Our Content</h2>
+          <p>
+            Dive into our collection of articles covering the latest in
+            technology and innovation
+          </p>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="blog-filters">
+          <div class="filter-group">
+            <button class="filter-btn active" data-category="all">
+              All Posts
+            </button>
+            <button class="filter-btn" data-category="technology">
+              Technology
+            </button>
+            <button class="filter-btn" data-category="ai">AI & ML</button>
+            <button class="filter-btn" data-category="innovation">
+              Innovation
+            </button>
+            <button class="filter-btn" data-category="case-studies">
+              Case Studies
+            </button>
+            <button class="filter-btn" data-category="future">
+              Future Tech
+            </button>
+          </div>
+          <div class="search-box">
+            <input
+              type="text"
+              placeholder="Search articles..."
+              id="searchInput"
+            />
+            <button class="search-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M21 21L16.514 16.506M19 10.5C19 15.194 15.194 19 10.5 19C5.806 19 2 15.194 2 10.5C2 5.806 5.806 2 10.5 2C15.194 2 19 5.806 19 10.5Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="blog-grid" id="blogGrid">
+          <article class="blog-card" data-category="technology">
+            <div class="card-glow"></div>
+            <div class="blog-image">
+              <img
+                src="https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=crop&w=400&q=80"
+                alt="Sustainable Future"
+              />
+              <div class="category-tag">Technology</div>
+              <div class="read-time">7 min read</div>
+            </div>
+            <div class="blog-content">
+              <h3>Innovating for a Sustainable Future</h3>
+              <p>
+                A look into the latest technological advancements driving
+                sustainability and green energy solutions worldwide.
+              </p>
+              <div class="blog-meta">
+                <div class="author-mini">
+                  <div class="author-avatar-small">JS</div>
+                  <span>John Smith</span>
+                </div>
+                <div class="post-date">March 12, 2024</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="blog-card" data-category="ai">
+            <div class="card-glow"></div>
+            <div class="blog-image">
+              <img
+                src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80"
+                alt="Neuromorphic Computing"
+              />
+              <div class="category-tag">AI & ML</div>
+              <div class="read-time">8 min read</div>
+            </div>
+            <div class="blog-content">
+              <h3>Decoding Neuromorphic Computing</h3>
+              <p>
+                How brain-inspired computer architectures are paving the way for
+                hyper-efficient AI systems and intelligent computing.
+              </p>
+              <div class="blog-meta">
+                <div class="author-mini">
+                  <div class="author-avatar-small">AR</div>
+                  <span>Alex Ray</span>
+                </div>
+                <div class="post-date">March 10, 2024</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="blog-card" data-category="innovation">
+            <div class="card-glow"></div>
+            <div class="blog-image">
+              <img
+                src="https://images.unsplash.com/photo-1461344577544-4e5dc9487184?auto=format&fit=crop&w=400&q=80"
+                alt="Autonomous Systems"
+              />
+              <div class="category-tag">Innovation</div>
+              <div class="read-time">6 min read</div>
+            </div>
+            <div class="blog-content">
+              <h3>The Rise of Autonomous Systems</h3>
+              <p>
+                From self-driving cars to automated logistics, autonomous
+                systems are reshaping industries and creating new opportunities.
+              </p>
+              <div class="blog-meta">
+                <div class="author-mini">
+                  <div class="author-avatar-small">EC</div>
+                  <span>Emily Carter</span>
+                </div>
+                <div class="post-date">March 8, 2024</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="blog-card" data-category="future">
+            <div class="card-glow"></div>
+            <div class="blog-image">
+              <img
+                src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
+                alt="Cybersecurity"
+              />
+              <div class="category-tag">Future Tech</div>
+              <div class="read-time">9 min read</div>
+            </div>
+            <div class="blog-content">
+              <h3>Cybersecurity in the Post-Quantum Era</h3>
+              <p>
+                Preparing our digital defenses for the cryptographic challenges
+                and opportunities of quantum computing.
+              </p>
+              <div class="blog-meta">
+                <div class="author-mini">
+                  <div class="author-avatar-small">BW</div>
+                  <span>Ben Wallace</span>
+                </div>
+                <div class="post-date">March 5, 2024</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="blog-card" data-category="case-studies">
+            <div class="card-glow"></div>
+            <div class="blog-image">
+              <img
+                src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=400&q=80"
+                alt="Digital Twins"
+              />
+              <div class="category-tag">Case Studies</div>
+              <div class="read-time">5 min read</div>
+            </div>
+            <div class="blog-content">
+              <h3>Digital Twins: A New Paradigm</h3>
+              <p>
+                Virtual models of physical assets are changing how we design,
+                monitor, and operate complex systems across industries.
+              </p>
+              <div class="blog-meta">
+                <div class="author-mini">
+                  <div class="author-avatar-small">SC</div>
+                  <span>Sarah Chen</span>
+                </div>
+                <div class="post-date">March 3, 2024</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="blog-card" data-category="technology">
+            <div class="card-glow"></div>
+            <div class="blog-image">
+              <img
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80"
+                alt="Edge Computing"
+              />
+              <div class="category-tag">Technology</div>
+              <div class="read-time">7 min read</div>
+            </div>
+            <div class="blog-content">
+              <h3>The Edge Computing Revolution</h3>
+              <p>
+                How edge computing is transforming data processing and enabling
+                real-time applications across distributed networks.
+              </p>
+              <div class="blog-meta">
+                <div class="author-mini">
+                  <div class="author-avatar-small">MJ</div>
+                  <span>Mike Johnson</span>
+                </div>
+                <div class="post-date">March 1, 2024</div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button class="page-btn prev" disabled>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+            Previous
+          </button>
+          <div class="page-numbers">
+            <button class="page-number active">1</button>
+            <button class="page-number">2</button>
+            <button class="page-number">3</button>
+            <span class="page-ellipsis">...</span>
+            <button class="page-number">8</button>
+          </div>
+          <button class="page-btn next">
+            Next
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+      <div class="container">
+        <div class="newsletter-content">
+          <div class="newsletter-text">
+            <h2>Stay Updated</h2>
+            <p>
+              Get the latest articles and insights delivered directly to your
+              inbox
+            </p>
+          </div>
+          <div class="newsletter-form">
+            <input type="email" placeholder="Enter your email address" />
+            <button class="btn btn-primary">Subscribe</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <div class="logo">
+              <img
+                src="/assets/kp2.1.png"
+                alt="Kalpa Preeth Logo"
+                class="logo-icon"
+              />
+              Kalpa Preeth
+            </div>
+            <p>Building tomorrow's innovations today.</p>
+          </div>
+          <div class="footer-copyright">
+            <p>&copy; 2024 Kalpa Preeth Pvt. Ltd. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="blog.js"></script>
+  </body>
+</html>
